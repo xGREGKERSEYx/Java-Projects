@@ -1,12 +1,4 @@
-//********************************************************************************
-// PANTHERID:  [6296562]
-// CLASS: COP 2210 – [2021]
-// ASSIGNMENT # [3]
-// DATE: [2021-10-31]
-//
-// I hereby swear and affirm that this work is solely my own, and not the work 
-// or the derivative of the work of someone else.
-//********************************************************************************
+
 package hauntedhouseproject;
 
 import javax.swing.ImageIcon;
