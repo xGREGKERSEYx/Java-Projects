@@ -1,5 +1,4 @@
-/* Gregory Kersey
-*  02/18/2022
+/* 
 *  This is an Object-Orineted based project that uses for loops
 *  2D, 1D arrays, and Objects to perform a trajectory calculation
 *  And returns the best values i.e the values that lie between the
