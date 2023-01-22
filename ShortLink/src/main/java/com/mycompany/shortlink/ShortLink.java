@@ -1,17 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
- */
-
 package com.mycompany.shortlink;
 
-/**
- *
- * @author grego
- */
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
 public class ShortLink {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
     }
+    static String shorterLink(int n){
+        
+        char map [] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+        //map that stores the list of possible values
+        
+        
+        StringBuffer shorturl = new StringBuffer();
+        //creates a string that can be modified
+        
+       
+        
+    }//Function that generates a short URl from an integer ID
 }
