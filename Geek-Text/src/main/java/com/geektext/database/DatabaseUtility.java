@@ -1,9 +1,13 @@
+//https://www.baeldung.com/spring-data-jpa-multiple-databases#3-configuring-a-datasource
+
 package com.geektext.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class DatabaseUtility {
     private static Connection connection = null;
     

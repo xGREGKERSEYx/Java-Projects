@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.4</version>
+		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.geektext</groupId>
-	<artifactId>GeekText</artifactId>
+	<artifactId>Geek-Text</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>GeekText</name>
-	<description>Group 21&apos;s Geektext</description>
+	<name>Geek-Text</name>
+	<description>Group 21 Feature 3</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -26,6 +26,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
