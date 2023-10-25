@@ -1,6 +1,4 @@
 # Java-Projects
-# Java projects I have designed to showcase my experience in the Java Development language
-# You will find descriptions of the projects below, sorted by recency 
 
 1. Geek Text
   - is an API Service that supports an online web application bookstore
