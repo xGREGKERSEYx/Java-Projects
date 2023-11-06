@@ -3,7 +3,7 @@
 // https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html
 //https://www.twilio.com/blog/create-rest-apis-java-spring-boot
 
-package com.geektext.controller;
+package main.java.com.geektext.controller;
 
 import com.geektext.model.Books;
 import com.geektext.model.ShoppingCart;
