@@ -4,7 +4,6 @@ package com.geektext.service;
 
 import com.geektext.model.Books;
 import com.geektext.model.ShoppingCart;
-import com.geektext.model.User;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 

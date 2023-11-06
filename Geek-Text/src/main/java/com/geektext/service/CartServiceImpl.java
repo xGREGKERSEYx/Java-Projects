@@ -18,17 +18,15 @@ import org.springframework.stereotype.Service;
 @Service //Spring annotation, implements service
 public class CartServiceImpl implements CartService {
     
-//    @Autowired // Spring annotation 
+
     public List<ShoppingCart> shoppingCart; 
 
     @Autowired
-    private DataSource dataSource; // Connection instance is called
+    private DataSource dataSource; // Connection instance is injected
 
     public CartServiceImpl(DataSource dataSource) {
          this.dataSource = dataSource;
-    } //Creates the data source instance used to get connection
-     //was getting Consider defining a bean of type 'java.sql.Connection' 
-     //in your configuration had to use data source
+    } // Creates the data source instance used to get a connection
 
     
     public CartServiceImpl() {
@@ -45,9 +43,6 @@ public class CartServiceImpl implements CartService {
             while (rs.next()) {
                 ShoppingCart cart = new ShoppingCart();
                 cart.setCart_item_id(rs.getLong("cart_item_id"));
-//                cart.setUser_id(rs.getLong("user_id"));
-//            
-//                cart.setBook_id(rs.getLong("book_id"));
 
                 //In order to use properties of object we need to instantiate those objects
                 User user = new User();
@@ -68,7 +63,7 @@ public class CartServiceImpl implements CartService {
             Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return shoppingCart;
-    }//Retrieves all carts
+    }//Retrieves all carts and associated data
     
     @Override
     public List<Books> getCartData(Long user_id) {
@@ -96,9 +91,12 @@ public class CartServiceImpl implements CartService {
                 book.setBook_title(rs.getString("book_name"));
                 book.setAuthor(rs.getString("author"));
                 book.setPrice(rs.getDouble("price"));
+                book.setGenre(rs.getString("genre"));
+                book.setUnits_sold(rs.getInt("units_sold"));
+                book.setRating(rs.getDouble("rating"));
+                book.setPublisher(rs.getString("publisher"));
+                book.setDiscount(rs.getDouble("discount"));
 
-
-                
                 userBooks.add(book);
             }
         } catch (SQLException ex) {
@@ -140,9 +138,8 @@ public class CartServiceImpl implements CartService {
            PreparedStatement stmt = connection.prepareStatement("""
                                                                 INSERT INTO cart_items (user_id, book_id, quantity)
                                                                 VALUES(?, ?, 1);""");
-           stmt.setLong(1, user_id);// '?' allows us to insert a variable into an sql statement
-           stmt.setLong(2, book_id);// '?' allows us to insert a variable into an sql statement
-//         stmt.setInt(3, quantity);// '?' allows us to insert a variable into an sql statement
+           stmt.setLong(1, user_id);
+           stmt.setLong(2, book_id);
            stmt.executeUpdate();//Adds the statement to our db
            
         } catch (SQLException ex) {
@@ -157,8 +154,7 @@ public class CartServiceImpl implements CartService {
            PreparedStatement stmt = connection.prepareStatement("""
                                                                 DELETE FROM cart_items WHERE book_id=? AND user_id=?""");
            stmt.setLong(1, user_id);// '?' allows us to insert a variable into an sql statement
-           stmt.setLong(2, book_id);// '?' allows us to insert a variable into an sql statement
-
+           stmt.setLong(2, book_id);
            stmt.executeUpdate();//Adds the statement to our db
            
         } catch (SQLException ex) {
