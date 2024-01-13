@@ -10,8 +10,7 @@
   - A dynamic and interactive tool utilizing Java Swing Components that allows users to visually comprehend and explore various sorting algorithms by rendering the sorting process in real-time
     
     * Key Features:
-   
-3. Inventory Management System
+  
      
       
   
