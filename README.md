@@ -1,6 +1,8 @@
 # Java-Projects
 
 1. Geek Text
+   - GeekText is a scalable online bookstore implemented using the Spring Framework and JDBC for efficient backend development. The project focuses on clean code organization, dynamic pricing, and future enhancements such as personalized recommendations and social interactions.
+  
 * Key Components:
 
    - User Management: Create, update, and manage user accounts seamlessly.
