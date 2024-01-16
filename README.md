@@ -1,7 +1,7 @@
 # Java-Projects
 
 1. Geek Text
-  - Key Components:
+* Key Components:
 
    - User Management: Create, update, and manage user accounts seamlessly.
    - Book Catalog: Explore a diverse range of books categorized by genre, rating, and popularity.
