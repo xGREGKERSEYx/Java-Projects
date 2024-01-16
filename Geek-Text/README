@@ -1,3 +1,4 @@
 GEEK TEXT
 
 GeekText is an online bookstore project built with a focus on efficient backend development using the Spring Framework and JDBC for seamless database interactions. The architecture is designed for scalability and maintainability, employing Spring's Inversion of Control and Dependency Injection principles. Our emphasis on clean code organization ensures a robust foundation. The project tackles challenges such as dynamic pricing, implementing discounts based on user interactions. In the future, we plan to enhance the platform with features like personalized recommendations and social interactions. GeekText represents a practical application of technology to create a functional and technically sound online bookstore experience.
+
