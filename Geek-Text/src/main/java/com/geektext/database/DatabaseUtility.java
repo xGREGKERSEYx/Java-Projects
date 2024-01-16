@@ -26,9 +26,6 @@ public class DatabaseUtility {
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
-            
-            
-            
         }
         return connection;
     }

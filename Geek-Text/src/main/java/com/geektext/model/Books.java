@@ -23,9 +23,6 @@ public class Books {
     private String author;
 
     @Column
-    private Double price; 
-    
-    @Column
     private String genre;
     
     @Column
@@ -37,20 +34,28 @@ public class Books {
     @Column
     private String publisher;
     
-    
-    @Column(nullable = false)
+    @Column
     private Double discount;
+    
+    @Column
+    private Double original_price; 
+    
+    @Column
+    private Double discount_price; 
+    
 
-    public Books(Long book_id, String book_title, String author, Double price, String genre, int units_sold, Double rating, String publisher, Double discount) {
+    public Books(Long book_id, String book_title, String author, String genre, int units_sold, Double rating, String publisher, Double discount, Double original_price, Double discount_price) {
         this.book_id = book_id;
         this.book_title = book_title;
         this.author = author;
-        this.price = price;
         this.genre = genre;
         this.units_sold = units_sold;
         this.rating = rating;
         this.publisher = publisher;
         this.discount = discount;
+        this.original_price = original_price;
+        this.discount_price = discount_price;
+        
     }
 
     public Books() {
@@ -61,34 +66,26 @@ public class Books {
         return book_id;
     }
 
-    public String getBook_title() {
-        return book_title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
     public void setBook_id(Long book_id) {
         this.book_id = book_id;
+    }
+
+    public String getBook_title() {
+        return book_title;
     }
 
     public void setBook_title(String book_title) {
         this.book_title = book_title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-    
     public String getGenre() {
         return genre;
     }
@@ -129,6 +126,22 @@ public class Books {
         this.discount = discount;
     }
 
+    public Double getOriginalPrice() {
+        return original_price;
+    }
+
+    public void setOriginalPrice(Double original_price) {
+        this.original_price = original_price;
+    }
+
+    public Double getDiscountPrice() {
+        return discount_price;
+    }
+
+    public void setDiscountPrice(Double discount_price) {
+        this.discount_price = discount_price;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -136,12 +149,13 @@ public class Books {
         sb.append("book_id=").append(book_id);
         sb.append(", book_title=").append(book_title);
         sb.append(", author=").append(author);
-        sb.append(", price=").append(price);
         sb.append(", genre=").append(genre);
         sb.append(", units_sold=").append(units_sold);
         sb.append(", rating=").append(rating);
         sb.append(", publisher=").append(publisher);
         sb.append(", discount=").append(discount);
+        sb.append(", originalPrice=").append(original_price);
+        sb.append(", discountPrice=").append(discount_price);
         sb.append('}');
         return sb.toString();
     }

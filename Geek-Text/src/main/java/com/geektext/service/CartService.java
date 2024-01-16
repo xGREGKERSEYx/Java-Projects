@@ -15,7 +15,7 @@ public interface CartService{
     
     public List<ShoppingCart> getAllCartData();
     
-    public Long getSubtotal(Long user_id);
+    public Double getSubtotal(Long user_id);
     
     public void addBookToCart(Long book_id, Long user_id);
     

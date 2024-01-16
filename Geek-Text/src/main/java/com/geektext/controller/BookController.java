@@ -50,7 +50,7 @@ public class BookController {
     public ResponseEntity<Double> discountForPublisher(@RequestBody Map<String, Object> request){
         Long book_id = Long.valueOf(request.get("book_id").toString());
         Double discount = Double.valueOf(request.get("discount").toString());
-        Double price = bookService.discountForPublisher(discount, book_id);
+        Double price = bookService.discountForPublisher(discount, book_id) ;
         return ResponseEntity.ok().body(price);
     }
         

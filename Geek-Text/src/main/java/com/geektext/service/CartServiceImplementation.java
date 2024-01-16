@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service //Spring annotation, implements service
-public class CartServiceImpl implements CartService {
+public class CartServiceImplementation implements CartService {
     
 
     public List<ShoppingCart> shoppingCart; 
@@ -24,12 +24,12 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private DataSource dataSource; // Connection instance is injected
 
-    public CartServiceImpl(DataSource dataSource) {
+    public CartServiceImplementation(DataSource dataSource) {
          this.dataSource = dataSource;
     } // Creates the data source instance used to get a connection
 
     
-    public CartServiceImpl() {
+    public CartServiceImplementation() {
          shoppingCart = new ArrayList<>();
     }//Creates the shoppingCart, no arguement
 
@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return shoppingCart;
     }//Retrieves all carts and associated data
@@ -90,44 +90,51 @@ public class CartServiceImpl implements CartService {
                 book.setBook_id(rs.getLong("book_id"));
                 book.setBook_title(rs.getString("book_name"));
                 book.setAuthor(rs.getString("author"));
-                book.setPrice(rs.getDouble("price"));
                 book.setGenre(rs.getString("genre"));
                 book.setUnits_sold(rs.getInt("units_sold"));
                 book.setRating(rs.getDouble("rating"));
                 book.setPublisher(rs.getString("publisher"));
                 book.setDiscount(rs.getDouble("discount"));
+                book.setOriginalPrice(rs.getDouble("original_price"));
+                book.setOriginalPrice(rs.getDouble("discount_price"));
+                
 
                 userBooks.add(book);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return userBooks;
     }//Retrieves specified user's data
     
     @Override
-    public Long getSubtotal(Long user_id){
-       Long sub_total = null;
+    public Double getSubtotal(Long user_id){
+       Double sub_total = null;
        
        try (Connection connection = dataSource.getConnection()){
            PreparedStatement stmt = connection.prepareStatement(
-                "SELECT SUM(book.price * cart.quantity) AS sub_total " +
-                "FROM cart_items cart " +
-                "INNER JOIN books book ON cart.book_id = book.book_id " +
-                "WHERE cart.user_id = ?"
-        );
+                "SELECT SUM(\n" +
+                "    CASE\n" +
+                "        WHEN book.discount_price IS NOT NULL THEN book.discount_price * cart.quantity\n" +
+                "        ELSE book.original_price * cart.quantity\n" +
+                "    END\n" +
+                ") AS sub_total\n" +
+                "FROM cart_items cart\n" +
+                "INNER JOIN books book ON cart.book_id = book.book_id\n" +
+                "WHERE cart.user_id = ?;"
+                        );
            stmt.setLong(1, user_id);// '?' allows us to insert a variable into an sql statement
 
   
             //Data comes in the form of tables
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                sub_total = rs.getLong("sub_total");
+                sub_total = rs.getDouble("sub_total");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sub_total;
     }//Uses a PreparedStatement to run an sql query that returns sub_total
@@ -144,7 +151,7 @@ public class CartServiceImpl implements CartService {
            
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//Adds a book to the user's cart
     
@@ -159,7 +166,7 @@ public class CartServiceImpl implements CartService {
            
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//Removes a book to the user's cart
         

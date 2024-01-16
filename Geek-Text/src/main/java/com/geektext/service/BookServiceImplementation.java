@@ -55,12 +55,13 @@ public class BookServiceImplementation implements BookService{
                 book.setBook_id(rs.getLong("book_id"));
                 book.setBook_title(rs.getString("book_name"));
                 book.setAuthor(rs.getString("author"));
-                book.setPrice(rs.getDouble("price"));
                 book.setGenre(rs.getString("genre"));
                 book.setUnits_sold(rs.getInt("units_sold"));
                 book.setRating(rs.getDouble("rating"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setDiscount(rs.getDouble("discount"));
+                book.setDiscount(rs.getDouble("discount"));                
+                book.setDiscount(rs.getDouble("original_price"));
+                book.setDiscount(rs.getDouble("discount_price"));
     
                 returnBooks.add(book);
             }
@@ -89,12 +90,13 @@ public class BookServiceImplementation implements BookService{
                 book.setBook_id(rs.getLong("book_id"));
                 book.setBook_title(rs.getString("book_name"));
                 book.setAuthor(rs.getString("author"));
-                book.setPrice(rs.getDouble("price"));
                 book.setGenre(rs.getString("genre"));
                 book.setUnits_sold(rs.getInt("units_sold"));
                 book.setRating(rs.getDouble("rating"));
                 book.setPublisher(rs.getString("publisher"));
                 book.setDiscount(rs.getDouble("discount"));
+                book.setDiscount(rs.getDouble("original_price"));
+                book.setDiscount(rs.getDouble("discount_price"));
                 returnBooks.add(book);
            } 
        } catch (SQLException ex) {
@@ -122,12 +124,13 @@ public class BookServiceImplementation implements BookService{
                 book.setBook_id(rs.getLong("book_id"));
                 book.setBook_title(rs.getString("book_name"));
                 book.setAuthor(rs.getString("author"));
-                book.setPrice(rs.getDouble("price"));
                 book.setGenre(rs.getString("genre"));
                 book.setUnits_sold(rs.getInt("units_sold"));
                 book.setRating(rs.getDouble("rating"));
                 book.setPublisher(rs.getString("publisher"));
                 book.setDiscount(rs.getDouble("discount"));
+                book.setDiscount(rs.getDouble("original_price"));
+                book.setDiscount(rs.getDouble("discount_price"));
                 returnBooks.add(book);
            } 
        } catch (SQLException ex) {
@@ -143,20 +146,32 @@ public class BookServiceImplementation implements BookService{
         try (Connection connection = dataSource.getConnection()){
            PreparedStatement stmt = connection.prepareStatement("""
                                                                 UPDATE books
-                                                                SET discount = ?, price = price - (price * discount)
+                                                                SET discount = ?, discount_price = original_price - (original_price * discount)
                                                                 WHERE book_id = ?;""");
            stmt.setDouble(1, discount);// '?' allows us to insert a variable into an sql statement
            stmt.setLong(2, book_id);
            stmt.executeUpdate();//Adds the statement to our db
            
-           ResultSet rs = stmt.executeQuery();
+           PreparedStatement selectStmt = connection.prepareStatement("""
+                                                                        SELECT
+                                                                            CASE
+                                                                                WHEN book.discount_price IS NOT NULL THEN book.discount_price
+                                                                                ELSE book.original_price
+                                                                            END AS price
+                                                                        FROM books book
+                                                                        WHERE book_id = ?;
+                                                                       """);
+           selectStmt.setLong(1, book_id);   
+           selectStmt.executeQuery();
+           
+           ResultSet rs = selectStmt.executeQuery();
             if (rs.next()) {
                 price = rs.getDouble("price");
             }
            
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return price;
     }

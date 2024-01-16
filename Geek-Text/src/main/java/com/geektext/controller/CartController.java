@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController //Spring Annotation
-@RequestMapping(path="/")//Spring Annotation, URI's (endpoints) start with shoppingcart
+@RequestMapping(path="/cart")//Spring Annotation, URI's (endpoints) start with shoppingcart
 public class CartController {
     
     @Autowired //Spring annotation, cartService calls CartService which implements getCartData
@@ -35,22 +35,22 @@ public class CartController {
         this.cartService = cartService;
     }//WIHTOUT THE CONSTUCTOR, RESULTED IN CIRCULAR INJECTION
     
-    @GetMapping("/shoppingcart")
+    @GetMapping("/cart_data")
     public List<ShoppingCart> getCarts(){
         return cartService.getAllCartData();    
     }//Retrieves all carts
     
     
-    @GetMapping("/shoppingcart/subtotal")
-    public ResponseEntity<Long> getSubTotal(@RequestBody Map<String, Object> request) {//RequestBody allows us to use Postman
+    @GetMapping("/subtotal")
+    public ResponseEntity<Double> getSubTotal(@RequestBody Map<String, Object> request) {//RequestBody allows us to use Postman
         Long user_id = Long.valueOf(request.get("user_id").toString());
         //Value is an Int in the DB, so we are parsing it into a Long value (foreign key)
-        Long subtotal = cartService.getSubtotal(user_id);
+        Double subtotal = cartService.getSubtotal(user_id);
         return ResponseEntity.ok().body(subtotal);
     }//Response Entity allows us to view the reponse via web page
 
     
-    @PostMapping("/shoppingcart/user/add")
+    @PostMapping("/user/add")
     public ResponseEntity addBookToCart(@RequestBody Map<String, Object> request){
          Long user_id = Long.valueOf(request.get("user_id").toString());
          Long book_id = Long.valueOf(request.get("book_id").toString());
@@ -61,14 +61,14 @@ public class CartController {
     }//Adds a book to specified user's cart
     
     
-    @GetMapping("/shoppingcart/user")
+    @GetMapping("/user")
     public ResponseEntity<List<Books>> getUserCart(@RequestBody Map<String, Object> request){
         Long user_id = Long.valueOf(request.get("user_id").toString());
         return ResponseEntity.ok(cartService.getCartData(user_id));
         
     }//retrieves the specified user's cart
     
-    @DeleteMapping("/shoppingcart/user/remove")
+    @DeleteMapping("/user/remove")
     public ResponseEntity removeBookFromCart(@RequestBody Map<String, Object> request){
         Long user_id = Long.valueOf(request.get("user_id").toString());
         Long book_id = Long.valueOf(request.get("book_id").toString());
