@@ -1,4 +1,4 @@
-#GEEK TEXT
+GEEK TEXT
 
 GeekText is an online bookstore project built with a focus on efficient backend development using the Spring Framework 
 and JDBC for seamless database interactions. The architecture is designed for scalability and maintainability, 
@@ -8,7 +8,7 @@ user interactions. In the future, we plan to enhance the platform with features 
 social interactions. GeekText represents a practical application of technology to create a functional and technically
 sound online bookstore experience.
 
-#Key Components:
+Key Components:
     - User Management: Create, update, and manage user accounts seamlessly.
     - Book Catalog: Explore a diverse range of books categorized by genre, rating, and popularity.
     - Shopping Cart: Effortlessly add and remove books with dynamic pricing for a seamless checkout experience.
