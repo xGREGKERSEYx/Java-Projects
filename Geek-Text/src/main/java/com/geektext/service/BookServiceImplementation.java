@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.geektext.service;
 
 import com.geektext.model.Books;
@@ -17,23 +13,22 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service //Spring annotation, implements service
+@Service//Spring annotation, indicates it's a service
 public class BookServiceImplementation implements BookService{
     
     public List<Books> bookList; 
     
     @Autowired
-    private DataSource dataSource; // Connection instance is called
+    private DataSource dataSource; //Connection instance is called
 
+    
     public BookServiceImplementation(DataSource dataSource) {
         this.dataSource = dataSource;
-    }//Creates the data source instance used to get connection
-     //was getting Consider defining a bean of type 'java.sql.Connection' 
-     //in your configuration had to use data source
+    }//Constructor with DataSource dependency injection
     
     public BookServiceImplementation() {
         bookList = new ArrayList<>();
-    }
+    }//Constructor without arguments, initializes the bookList
     
     @Override
     public List<Books> getBookGenre(String genre){
@@ -62,6 +57,7 @@ public class BookServiceImplementation implements BookService{
                 book.setDiscount(rs.getDouble("discount"));                
                 book.setDiscount(rs.getDouble("original_price"));
                 book.setDiscount(rs.getDouble("discount_price"));
+                //Setting book attributes from the result set
     
                 returnBooks.add(book);
             }
@@ -70,7 +66,8 @@ public class BookServiceImplementation implements BookService{
             Logger.getLogger(BookServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return returnBooks;
-    }//Uses PreparedStatement and ResultSet to retrieve books by genre
+    }//Method to retrieve books by genre using PreparedStatement and ResultSet
+    
     
     @Override
     public List<Books> getTopSellers(int limit) {
@@ -97,13 +94,15 @@ public class BookServiceImplementation implements BookService{
                 book.setDiscount(rs.getDouble("discount"));
                 book.setDiscount(rs.getDouble("original_price"));
                 book.setDiscount(rs.getDouble("discount_price"));
+                //Setting book attributes from the result set
                 returnBooks.add(book);
            } 
        } catch (SQLException ex) {
             Logger.getLogger(BookServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
        return returnBooks;
-    }//Uses PreparedStatement and ResultSet to retrieve books by units sold
+    } //Method to retrieve top sellers by units sold using PreparedStatement and ResultSet
+    
 
     @Override
     public List<Books> getBookFromRating(Double rating, int limit) {
@@ -137,13 +136,16 @@ public class BookServiceImplementation implements BookService{
             Logger.getLogger(BookServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
        return returnBooks;
-    }//Uses PreparedStatement and ResultSet to retrieve books by rating
+    }//Method to retrieve books by rating and limit using PreparedStatement and ResultSet
+   
     
 
     @Override
     public Double discountForPublisher(Double discount, Long book_id) {
         Double price = null;
         try (Connection connection = dataSource.getConnection()){
+            
+           //Update the discount and calculate the discounted price
            PreparedStatement stmt = connection.prepareStatement("""
                                                                 UPDATE books
                                                                 SET discount = ?, discount_price = original_price - (original_price * discount)
@@ -152,6 +154,7 @@ public class BookServiceImplementation implements BookService{
            stmt.setLong(2, book_id);
            stmt.executeUpdate();//Adds the statement to our db
            
+           //Retrieve the calculated price after the discount
            PreparedStatement selectStmt = connection.prepareStatement("""
                                                                         SELECT
                                                                             CASE
@@ -174,7 +177,8 @@ public class BookServiceImplementation implements BookService{
             Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return price;
-    }
+    }//Method to apply a discount for a publisher and retrieve the discounted price
+   
     
 }
 

@@ -1,7 +1,5 @@
-//Controller recieve HTTP requests and return HTTP responses
-// https://www.baeldung.com/spring-response-entity
-// https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html
-//https://www.twilio.com/blog/create-rest-apis-java-spring-boot
+//Controller receives HTTP requests and returns HTTP responses
+//Annotations provided by Spring are used to define RESTful endpoints
 
 package com.geektext.controller;
 
@@ -21,36 +19,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController //Spring Annotation
-@RequestMapping(path="/cart")//Spring Annotation, URI's (endpoints) start with shoppingcart
+@RestController //Spring Annotation indicating that this class is a REST controller
+@RequestMapping(path="/cart")//Spring Annotation, specifying the base URI path for the controller
 public class CartController {
     
-    @Autowired //Spring annotation, cartService calls CartService which implements getCartData
-    private CartService cartService;
-    
-    private User user;
-    
+    @Autowired //Spring annotation, injecting the CartService dependency
+    private CartService cartService;    
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
-    }//WIHTOUT THE CONSTUCTOR, RESULTED IN CIRCULAR INJECTION
+    }//Constructor with CartService dependency injection
     
-    @GetMapping("/cart_data")
+    @GetMapping("/cart_data")//Endpoint for retrieving all cart data
     public List<ShoppingCart> getCarts(){
         return cartService.getAllCartData();    
-    }//Retrieves all carts
+    }    
     
-    
-    @GetMapping("/subtotal")
+    @GetMapping("/subtotal")//Endpoint for calculating the subtotal of a user's cart
     public ResponseEntity<Double> getSubTotal(@RequestBody Map<String, Object> request) {//RequestBody allows us to use Postman
         Long user_id = Long.valueOf(request.get("user_id").toString());
         //Value is an Int in the DB, so we are parsing it into a Long value (foreign key)
         Double subtotal = cartService.getSubtotal(user_id);
-        return ResponseEntity.ok().body(subtotal);
-    }//Response Entity allows us to view the reponse via web page
+        return ResponseEntity.ok().body(subtotal);//Response Entity allows us to view the reponse via web page
+    }//Extracts user_id and returns sub_total of cart via ResponseEntity
 
     
-    @PostMapping("/user/add")
+    @PostMapping("/user/add")//Endpoint for adding a book to a user's cart
     public ResponseEntity addBookToCart(@RequestBody Map<String, Object> request){
          Long user_id = Long.valueOf(request.get("user_id").toString());
          Long book_id = Long.valueOf(request.get("book_id").toString());
@@ -61,21 +55,21 @@ public class CartController {
     }//Adds a book to specified user's cart
     
     
-    @GetMapping("/user")
+    @GetMapping("/user")//Endpoint for retrieving a specified user's cart data
     public ResponseEntity<List<Books>> getUserCart(@RequestBody Map<String, Object> request){
         Long user_id = Long.valueOf(request.get("user_id").toString());
         return ResponseEntity.ok(cartService.getCartData(user_id));
         
     }//retrieves the specified user's cart
     
-    @DeleteMapping("/user/remove")
+    @DeleteMapping("/user/remove")// Endpoint for removing a book from a user's cart
     public ResponseEntity removeBookFromCart(@RequestBody Map<String, Object> request){
         Long user_id = Long.valueOf(request.get("user_id").toString());
         Long book_id = Long.valueOf(request.get("book_id").toString());
         cartService.removeBookFromCart(book_id, user_id);
         
         return ResponseEntity.ok("REMOVED"); 
-    }
+    }//extracts user_id and book_id and uses cartService to remove book from cart
     
 
 }

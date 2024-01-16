@@ -2,7 +2,6 @@
 package com.geektext.service;
 
 import com.geektext.model.CreditCard;
-import com.geektext.model.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,20 +14,20 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service//Spring annotation, indicates it's a service
 public class CreditCardServiceImplementation implements CreditCardService{
     public List<CreditCard> creditCard;
     
     @Autowired
-    private DataSource dataSource;
+    private DataSource dataSource;//Connection instance is called
 
     public CreditCardServiceImplementation(DataSource dataSource) {
         this.dataSource = dataSource;
-    }
+    }//Constructor with DataSource dependency injection
 
     public CreditCardServiceImplementation() {
         creditCard = new ArrayList<>();
-    }
+    }//Constructor without arguments, initializes the creditCard
     
     @Override
     public void addCreditCard(Long user_id, String card_number, Date card_expiration, String card_cvv, String billing_address) {
@@ -48,6 +47,6 @@ public class CreditCardServiceImplementation implements CreditCardService{
             ex.printStackTrace();
             Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         } 
-    }
+    }//Method to add a credit card by user id (given card information) using PreparedStatement
     
 }

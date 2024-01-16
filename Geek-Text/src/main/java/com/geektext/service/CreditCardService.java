@@ -1,12 +1,12 @@
-
+//This interface defines methods for credit card-related operations.
 package com.geektext.service;
 
-import com.geektext.model.CreditCard;
-import com.geektext.model.User;
 import java.sql.Date;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service//Spring annotation,to indicate that it's a Spring Data Service.
 public interface CreditCardService {
+    
+    //Method to add credit card information for a user to the database
     public void addCreditCard(Long user_id, String card_number, Date card_expiration, String card_cvv, String billing_address);
 }

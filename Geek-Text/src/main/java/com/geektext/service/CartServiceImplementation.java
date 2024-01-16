@@ -15,23 +15,23 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service //Spring annotation, implements service
+@Service//Spring annotation, indicates it's a service
 public class CartServiceImplementation implements CartService {
     
 
     public List<ShoppingCart> shoppingCart; 
 
     @Autowired
-    private DataSource dataSource; // Connection instance is injected
+    private DataSource dataSource; //Connection instance is injected
 
     public CartServiceImplementation(DataSource dataSource) {
          this.dataSource = dataSource;
-    } // Creates the data source instance used to get a connection
+    }//Constructor with DataSource dependency injection
 
     
     public CartServiceImplementation() {
          shoppingCart = new ArrayList<>();
-    }//Creates the shoppingCart, no arguement
+    }//Constructor without arguments, initializes the shoppingCart
 
     
     @Override

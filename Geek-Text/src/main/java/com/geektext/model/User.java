@@ -10,9 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+// This annotation indicates that this class is mapped to a database table named "users"
 @Entity
 @Table(name = "users")
 public class User {
+     // Column mapping for each feild (e.g. "book_name") in the "books" table
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
@@ -32,7 +34,8 @@ public class User {
     
     @Column
     private String mailing_address;
-
+    
+    // Constructor with parameters to initialize the object with specific values
     public User(Long user_id, String username, String email, String password, CreditCard card_id, String mailing_address) {
         this.user_id = user_id;
         this.username = username;
@@ -41,10 +44,11 @@ public class User {
         this.card_id = card_id;
         this.mailing_address = mailing_address;
     }
-
+    // Default constructor required by JPA
     public User() {
     }
- 
+    
+    // Getter and Setter methods for each field
     public Long getUser_id() {
         return user_id;
     }
@@ -95,7 +99,7 @@ public class User {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();// Build a string representation of the object
         sb.append("Users{");
         sb.append(", user_id=").append(user_id);
         sb.append(", username=").append(username);
@@ -105,7 +109,7 @@ public class User {
         sb.append("}");
         return sb.toString();
 
-    }
+    }// Override toString() method to provide a readable representation of the object
     
 
 }

@@ -1,3 +1,5 @@
+//Controller receives HTTP requests and returns HTTP responses
+//Annotations provided by Spring are used to define RESTful endpoints
 
 package com.geektext.controller;
 
@@ -13,19 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController //Spring Annotation
-@RequestMapping(path="/card")//Spring Annotation, URI's (endpoints) start with shoppingcart
+@RestController//Spring Annotation indicating that this class is a REST controller
+@RequestMapping(path="/card")//Spring Annotation, specifying the base URI path for the controller
 public class CardController {
     
     private CreditCardService creditCardService;
-    
-    private CreditCard creditCard;
 
     public CardController(CreditCardService creditCardService) {
         this.creditCardService = creditCardService;
-    }
+    }//Constructor with CreditCardService dependency injection
     
-    @PostMapping("/add_card")
+    @PostMapping("/add_card")//Endpoint for adding a credit card
     public ResponseEntity addCreditCard(@RequestBody Map<String, Object> request){
         Long user_id = Long.valueOf(request.get("user_id").toString());
         String card_number = String.valueOf(request.get("card_number").toString());

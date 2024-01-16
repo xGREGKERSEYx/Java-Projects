@@ -1,4 +1,6 @@
-//https://www.baeldung.com/spring-data-jpa-multiple-databases#3-configuring-a-datasource
+// This class provides a utility for obtaining a connection to a MySQL database
+// It follows a singleton pattern to reuse an existing connection if available
+// The connection details are hardcoded for demonstration purposes
 
 package com.geektext.database;
 
@@ -14,19 +16,20 @@ public class DatabaseUtility {
     public static Connection getConnection() throws SQLException{
         if(connection != null){//If the connection exists return the connection
             return connection;
-        }else{//Provides a connection if connection IS null
+        }else{ //If the connection is null, create a new connection
             String driver = "com.mysql.cj.jdbc.Driver";
             String url = "jdbc:mysql://127.0.0.1:3306/geek_text?zeroDateTimeBehavior=CONVERT_TO_NULL";
             String user = "root";
             String password = "Group21";
             
-            try {
+            try {//Load the MySQL JDBC driver
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url,user,password);
+                // Create a new connection with the specified URL, user, and password
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }
-        return connection;
+        return connection;// Return the obtained connection
     }
 }

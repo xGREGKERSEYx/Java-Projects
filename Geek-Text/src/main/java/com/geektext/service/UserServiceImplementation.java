@@ -1,8 +1,8 @@
+// This class implements the UserService interface and provides methods for user-related operations.
+// It uses JDBC for database interactions
 
 package com.geektext.service;
 
-import com.geektext.model.Books;
-import com.geektext.model.ShoppingCart;
 import com.geektext.model.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,24 +18,21 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service//Spring annotation, to indicate it's a Spring service.
 public class UserServiceImplementation implements UserService{
-    public List<User> users; 
-    CreditCardServiceImplementation cc = new CreditCardServiceImplementation();
+    public List<User> users;
 
     @Autowired
-    private DataSource dataSource; // Connection instance is injected
+    private DataSource dataSource; //Connection instance is injected
 
     public UserServiceImplementation(DataSource dataSource) {
          this.dataSource = dataSource;
-    } // Creates the data source instance used to get a connection
+    }//Constructor with DataSource dependency injection
 
-    
     public UserServiceImplementation() {
          users = new ArrayList<>();
-    }//Creates the shoppingCart, no arguement
-
-
+    }//Constructor without arguments, initializes the users list
+    
     @Override
     public void addUser(String username, String password, String email, String mailing_address) {
         try (Connection connection = dataSource.getConnection()){
@@ -54,7 +51,7 @@ public class UserServiceImplementation implements UserService{
              ex.printStackTrace();
              Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
          }
-    }
+    }//Method to add a new user to the database
 
     @Override
     public List<User> retrieveUserData(String username) {
@@ -84,7 +81,7 @@ public class UserServiceImplementation implements UserService{
             Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }   
         return returnUsers;
-    }
+    }//Method to retrieve user data based on the provided username
 
     @Override
     public void updateUserData(Long user_id, String username, String password, String email, String mailing_address) {
@@ -106,9 +103,8 @@ public class UserServiceImplementation implements UserService{
             Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }   
         
-    }
+    }//Method to update user data in the database
     
-
     @Override
     public void addCreditCard(Long user_id, String card_number, Date card_expiration, String card_cvv, String billing_address) {
         try (Connection connection = dataSource.getConnection()){
@@ -130,6 +126,7 @@ public class UserServiceImplementation implements UserService{
                      ex.printStackTrace();
                      Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
                  }    
-    }
+    }//Method to add credit card information for a user to the database
+    
     
 }

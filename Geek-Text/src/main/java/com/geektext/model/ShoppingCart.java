@@ -9,10 +9,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+// This annotation indicates that this class is mapped to a database table named "cart_items"
 @Entity
 @Table(name = "cart_items")
 public class ShoppingCart {
-    
+     // Column mapping for each feild (e.g. "book_name") in the "books" table
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // GenerationType.IDENTITY, database system will automatically generate the primary key value
@@ -27,20 +28,21 @@ public class ShoppingCart {
     private Books book;
     
     private int quantity;
-
+    
+    // Constructor with parameters to initialize the object with specific values
     public ShoppingCart(Long cart_item_id, User user, Books book, int quantity) {
         this.cart_item_id = cart_item_id;
         this.user = user;
         this.book = book;
         this.quantity = quantity;
     }
-
+    
+    // Default constructor required by JPA
     public ShoppingCart() {
         super();
     }
-
       
-
+    // Getter and Setter methods for each field
     public Long getCart_item_id() {
         return cart_item_id;
     }
@@ -77,7 +79,7 @@ public class ShoppingCart {
     @Override
     public String toString() {
         return "ShoppingCart{" + "cart_item_id=" + cart_item_id + ", user_id=" + user.getUser_id() + ", book_id=" + book.getBook_id() + ", quantity=" + quantity + '}';
-    }
+    }// Override toString() method to provide a readable representation of the object
     
    
     
