@@ -24,6 +24,8 @@ public class UserServiceImplementation implements UserService{
 
     @Autowired
     private DataSource dataSource; //Connection instance is injected
+    
+    private CreditCardServiceImplementation cc_service = new CreditCardServiceImplementation();
 
     public UserServiceImplementation(DataSource dataSource) {
          this.dataSource = dataSource;
@@ -105,28 +107,24 @@ public class UserServiceImplementation implements UserService{
         
     }//Method to update user data in the database
     
-    @Override
-    public void addCreditCard(Long user_id, String card_number, Date card_expiration, String card_cvv, String billing_address) {
-        try (Connection connection = dataSource.getConnection()){
-                    PreparedStatement stmt = connection.prepareStatement("""
-                                                                         INSERT INTO credit_card (user_id, card_number, card_expiration, card_cvv, billing_address)
-                                                                         VALUES(?, ?, ?, ?, ?);""", Statement.RETURN_GENERATED_KEYS);
-                    stmt.setLong(1, user_id);
-                    stmt.setString(2, card_number);
-                    stmt.setDate(3, card_expiration);
-                    stmt.setString(4, card_cvv);
-                    stmt.setString(5, billing_address);
-                    
-                    User user = new User();
-                    user.setCard_id(stmt.getGeneratedKeys());
-
-                    stmt.executeUpdate();//Adds the statement to our db
-
-                 } catch (SQLException ex) {
-                     ex.printStackTrace();
-                     Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
-                 }    
-    }//Method to add credit card information for a user to the database
+//    @Override
+//    public void addCreditCard(Long user_id, Long card_id) {
+//        try (Connection connection = dataSource.getConnection()){
+//                    PreparedStatement stmt = connection.prepareStatement("""
+//                                                                         INSERT INTO users (card_id)
+//                                                                         VALUES(?);""", Statement.RETURN_GENERATED_KEYS);
+//                   cc_service.addCreditCard(user_id,  =, card_expiration, card_cvv, billing_address);
+//                    
+//                    User user = new User();
+//                    user.setCard_id(stmt.getGeneratedKeys());
+//
+//                    stmt.executeUpdate();//Adds the statement to our db
+//
+//                 } catch (SQLException ex) {
+//                     ex.printStackTrace();
+//                     Logger.getLogger(CartServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+//                 }    
+//    }//Method to add credit card information for a user to the database
     
     
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController//Spring Annotation indicating that this class is a REST controller
-@RequestMapping(path="/card")//Spring Annotation, specifying the base URI path for the controller
+@RequestMapping(path="/user/card")//Spring Annotation, specifying the base URI path for the controller
 public class CardController {
     
     private CreditCardService creditCardService;
@@ -33,7 +33,7 @@ public class CardController {
         String card_cvv = String.valueOf(request.get("card_cvv").toString());
         String billing_address = String.valueOf(request.get("billing_address").toString());;
         
-        creditCardService.addCreditCard(null, user_id, card_number, card_expiration, card_cvv, billing_address);
+        creditCardService.addCreditCard(user_id, card_number, card_expiration, card_cvv, billing_address);
                 
         return null;
     }

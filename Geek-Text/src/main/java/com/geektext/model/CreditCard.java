@@ -6,8 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Date;
@@ -22,7 +20,7 @@ public class CreditCard {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long card_id;
   
-  @OneToOne  (fetch = FetchType.LAZY)//specifies how foreign key is mapped
+  @OneToOne(fetch = FetchType.LAZY)//specifies how foreign key is mapped
   @JoinColumn(name = "user_id") //specifies name of foreign key and corresponding primary key
   private User user_id;
 
